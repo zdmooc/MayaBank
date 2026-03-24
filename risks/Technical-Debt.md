@@ -1,5 +1,5 @@
 # Technical Debt
 
-- Densifier les LLD workloads
-- Choisir la cible logging
-- Détailler le backup stateful
+- Le domaine Data/IA est cadré mais non encore matérialisé par des artefacts lab détaillés.
+- Les patterns vector-database et ML serving restent documentaires en V1.
+- Le chiffrage FinOps Data/IA est encore hypothétique.

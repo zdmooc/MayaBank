@@ -1,47 +1,48 @@
 # LLD Global
 
-## 1. Objet
+## 1. Rôle du document
 
-Ce document sert de charnière entre le HLD et les LLD détaillés.
-Il fixe le vocabulaire commun, les environnements, les familles de composants et les écarts autorisés entre on-prem, AWS et Azure.
+Le LLD global sert de charnière entre les HLD, les LLD providers, les workloads et l’implémentation de dépôt.
 
-## 2. Environnements cibles
+## 2. Domaines couverts
+- platform
+- shared services
+- business workloads
+- data & stateful
+- data/IA
+- security
+- FinOps
+- governance
 
-- sandbox
-- build
-- preprod
-- prod
+## 3. Providers couverts
+- on-prem
+- AWS
+- Azure
 
-## 3. Zones logiques
+## 4. Workloads structurants
+- IBM ODM
+- PegaSystems
+- Kafka
+- Kong
+- PostgreSQL
+- MongoDB
+- portals
+- batch / CronJob
+- Data/IA patterns
 
-- management
-- shared-services
-- business
-- data
+## 5. Data/IA dans le LLD global
 
-## 4. Objets transverses
+Le domaine Data/IA ne remplace pas les couches existantes.
+Il s’appuie sur elles et ajoute :
+- data-pipelines
+- vector-database
+- ml-serving
+- rag-patterns
+- analytics workers
 
-- namespaces
-- resource quotas
-- limit ranges
-- network policies
-- ingress / exposure
-- observability hooks
-- secrets patterns
+## 6. Règle d’or
 
-## 5. Découpage provider
-
-- `onprem.md`
-- `aws.md`
-- `azure.md`
-
-## 6. Règle de cohérence
-
-Toute divergence provider doit rester une divergence d'implémentation, pas une divergence de modèle d'architecture.
-
-## 7. Dette V1
-
-- HA non détaillée
-- GitOps encore au stade de trajectoire
-- service mesh non retenu en V1
-- hardening incomplet
+Chaque document doit préciser si son contenu est :
+- documenté ;
+- semi-exécutable ;
+- cible future.

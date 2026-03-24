@@ -1,357 +1,309 @@
 # MayaBank
 
-Dépôt de référence pour une **banque d'investissement fictive** spécialisée dans les **produits dérivés financiers**, conçu pour apprendre, structurer et démontrer une trajectoire vers un niveau **Architecte OpenShift Senior**.
+MayaBank est un **dépôt de référence d’architecture, de gouvernance, de lab semi-exécutable et de pilotage FinOps** pour une **banque d’investissement fictive** spécialisée dans les **produits dérivés financiers**.
 
-Le dépôt combine quatre dimensions :
+Le dépôt est construit pour servir quatre usages en parallèle :
 
-1. **architecture** : vision, HLD, LLD, ADR, trajectoire OKD vers OpenShift enterprise ;
-2. **gouvernance** : revues d'architecture, qualité documentaire, risk register, design authority pack ;
-3. **lab semi-exécutable** : exemples locaux et overlays on-prem / AWS / Azure ;
-4. **FinOps avancé** : showback, chargeback, budgets, KPIs, capacité vs coût.
+1. **apprendre** le socle Kubernetes / OKD et raisonner comme un architecte plateforme ;
+2. **structurer** un dossier d’architecture crédible pour un contexte banque / marchés ;
+3. **démontrer** une trajectoire vers un niveau **Architecte OpenShift Senior** ;
+4. **reprendre le chantier plus tard** sans perdre le fil grâce à une documentation ordonnée.
 
-## 1. Pourquoi ce dépôt existe
+---
 
-MayaBank n'est ni un simple TP Kubernetes, ni une plateforme de production réelle.
+## 1. Ce que MayaBank est, et ce que MayaBank n’est pas
 
-C'est un **dépôt d'apprentissage et de démonstration** qui doit permettre de :
+### 1.1 MayaBank est
+- un dépôt **documentaire + architecture** ;
+- un support de **gouvernance** ;
+- un **lab semi-exécutable** ;
+- un support de **runbooks** ;
+- un cadre de **FinOps avancé** ;
+- un support d’**entretien, de comité d’architecture et de démonstration**.
 
-- comprendre le **socle Kubernetes / OKD** sous-jacent ;
-- raisonner comme un **architecte plateforme** ;
-- comparer **on-prem, AWS et Azure** sans perdre un modèle d'architecture commun ;
-- documenter la différence entre une base **open source** et une cible **OpenShift enterprise** ;
-- structurer des **workloads critiques** d'un contexte banque / marchés ;
-- intégrer les dimensions **stateful**, **IAM/SSO**, **observabilité**, **API Management**, **event streaming**, **batch** et **FinOps**.
+### 1.2 MayaBank n’est pas
+- une vraie plateforme de production bancaire ;
+- un produit applicatif prêt à déployer tel quel ;
+- un simple dépôt YAML sans vision d’architecture ;
+- un TP Kubernetes isolé des sujets de sécurité, de coûts et d’exploitation.
 
-## 2. Périmètre fonctionnel MayaBank
+---
 
-### 2.1 Domaine métier simulé
+## 2. Positionnement technique général
 
-MayaBank est une banque d'investissement fictive orientée :
+### 2.1 Base technique retenue
+La base de construction et d’apprentissage est :
+- **OKD / Kubernetes open source** ;
+- **on-prem + AWS + Azure** ;
+- un **niveau B semi-exécutable**, volontairement plus réaliste qu’un pur document, mais moins ambitieux qu’une vraie plateforme d’entreprise.
 
+### 2.2 Cible conceptuelle à maîtriser
+La cible de raisonnement, d’entretien et de maturité visée reste :
+- **OpenShift enterprise** ;
+- gouvernance de plateforme ;
+- GitOps ;
+- sécurité renforcée ;
+- observabilité structurée ;
+- workloads stateful ;
+- contraintes d’audit, de résilience et de pilotage des coûts.
+
+### 2.3 Pourquoi ce choix
+Ce choix permet de :
+- rester **100 % open source** sur la base du dépôt ;
+- comprendre **le socle réel** sous la plateforme ;
+- construire une trajectoire crédible vers une **lecture OpenShift enterprise** ;
+- éviter de dépendre trop tôt de composants propriétaires ou trop complexes.
+
+---
+
+## 3. Domaine métier simulé
+
+MayaBank représente une **banque d’investissement** orientée :
 - pricing de produits dérivés ;
 - trade booking ;
-- workflows d'approbation ;
-- risk scoring / decisioning ;
+- workflows d’approbation ;
+- decisioning / risk scoring ;
 - reporting réglementaire ;
 - batch de fin de journée ;
-- portail client institutionnel.
+- exposition API ;
+- portail client institutionnel ;
+- analytics, data platform et montée vers data/IA.
 
-### 2.2 Workloads couverts
+---
 
-Le dépôt couvre les workloads suivants :
+## 4. Domaines d’architecture couverts
 
+Le dépôt est structuré autour de **cinq domaines majeurs** :
+
+1. **platform**
+   - cluster baseline
+   - namespaces / quotas / policies
+   - ingress / exposition
+   - topologie multi-environnements
+
+2. **shared-services**
+   - Keycloak
+   - Kong
+   - Kafka
+   - observability
+   - patterns secrets / identité / intégration
+
+3. **business workloads**
+   - IBM ODM
+   - PegaSystems
+   - portals
+   - batch / CronJobs
+   - APIs métiers
+
+4. **data-ai**
+   - PostgreSQL
+   - MongoDB
+   - data pipelines
+   - vector database patterns
+   - ML serving patterns
+   - RAG / retrieval patterns
+   - gouvernance Data/IA et coûts associés
+
+5. **governance / operations / FinOps**
+   - ADR
+   - HLD / LLD
+   - runbooks
+   - sécurité
+   - showback / chargeback
+   - capacity planning
+   - quality gates
+
+---
+
+## 5. Workloads couverts
+
+### 5.1 Workloads métier et plateforme
 - **IBM ODM** pour le decisioning ;
-- **PegaSystems** pour les workflows et case management ;
-- **Kafka** pour l'event backbone ;
-- **Kong API Gateway** comme point d'entrée d'API ;
-- **ELK / observability stack** pour logs, métriques et diagnostic ;
+- **PegaSystems** pour le workflow et le case management ;
+- **Kafka** pour l’event backbone ;
+- **Kong API Gateway** pour l’exposition et la gouvernance API ;
+- **observability stack** pour métriques, logs et supervision ;
 - **client-portal-web** en mode stateless ;
 - **client-portal-session** en mode stateful ;
-- **PostgreSQL** pour la persistance relationnelle ;
-- **MongoDB** pour les données flexibles / référentiels / vues orientées document ;
-- **IAM/SSO** via Keycloak ;
+- **PostgreSQL** pour les données relationnelles ;
+- **MongoDB** pour les données orientées document ;
+- **Keycloak** pour IAM/SSO ;
 - **batch / CronJob** pour les traitements périodiques.
 
-## 3. Cible technique retenue
+### 5.2 Workloads Data/IA ajoutés à la V1.1 du dépôt
+- **data-pipelines** pour ingestion, transformation et enrichissement ;
+- **vector-database** pour cas d’usage retrieval / knowledge / similarity search ;
+- **ml-serving** pour exposition d’inférence ;
+- **rag-patterns** pour recherche augmentée interne ;
+- **analytics workers** pour calculs, scoring et génération de vues enrichies.
 
-### 3.1 Base open source
+---
 
-La base d'apprentissage et de construction est :
+## 6. Pourquoi le domaine Data/IA est dans le même dépôt
 
-- **OKD / Kubernetes open source**
-- **on-prem + AWS + Azure**
-- **niveau semi-exécutable** : suffisamment concret pour un lab crédible, sans viser la production réelle
+Le domaine **Data/IA** n’est pas traité comme un autre dépôt pour trois raisons :
 
-### 3.2 Mapping cible entreprise
+- une banque d’investissement moderne n’isole pas complètement data, IA, intégration, IAM, observabilité et coûts ;
+- l’objectif du dépôt est d’apprendre à **raisonner plateforme de bout en bout** ;
+- le volet Data/IA modifie profondément les décisions de **capacity planning, observability, stockage, sécurité et FinOps**.
 
-La cible conceptuelle à maîtriser à terme reste :
+Le domaine Data/IA est donc un **quatrième pilier technique** du dépôt, au même titre que platform, shared-services et business workloads.
 
-- **OpenShift enterprise**
-- gouvernance plateforme
-- GitOps
-- sécurité renforcée
-- stateful enterprise
-- conformité et auditabilité
+---
 
-Le mapping est détaillé dans :
-- `docs/adr/ADR-0011-okd-to-openshift-enterprise-mapping.md`
-- `docs/hld/HLD-Platform.md`
-- `docs/roadmap/Platform-Roadmap.md`
+## 7. Arborescence logique du dépôt
 
-## 4. Ce que ce dépôt doit prouver
+Le dépôt est structuré de manière à pouvoir être lu, enrichi et rejoué progressivement.
 
-À la fin, le dépôt doit démontrer que son auteur sait :
+### 7.1 Documents principaux
+- `docs/vision/` : vision métier et principes d’architecture
+- `docs/hld/` : High Level Design
+- `docs/lld/` : Low Level Design
+- `docs/adr/` : Architecture Decision Records
+- `docs/security/` : sécurité, IAM, OIDC, compliance
+- `docs/finops/` : cadre FinOps
+- `docs/runbooks/` : exploitation
+- `docs/governance/` : revue d’architecture, quality gates, risk register
+- `docs/roadmap/` : trajectoire produit, plateforme, sécurité et sprints
 
-- produire un **HLD crédible** ;
-- décliner ce HLD en **LLD cohérents** ;
-- expliquer les différences **stateless vs stateful** ;
-- raisonner **shared services vs business workloads** ;
-- intégrer **IAM/SSO**, **API Gateway**, **eventing**, **data**, **observabilité** ;
-- articuler **coût, capacité, criticité, gouvernance** ;
-- traduire une base **OKD** vers une cible **OpenShift enterprise** ;
-- tenir une discussion d'architecte en **entretien** ou en **comité d'architecture**.
+### 7.2 Partes lab / plateforme
+- `lab/` : topologies et exemples rejouables
+- `platform/` : structuration logique des services et overlays
+- `infra/` : terraform, ansible, scripts
+- `gitops/` : Argo CD, Helm, Kustomize
+- `cicd/` : Jenkins, quality gates, validation
+- `finops/` : modèles, rapports, dashboards
+- `evidence/` : preuves, logs, screenshots, smoke tests
+- `risks/` : assumptions, debt, issues, RAID log
 
-## 5. Structure du dépôt
+---
 
-```text
-MayaBank/
-├── docs/            # vision, HLD, LLD, ADR, runbooks, sécurité, FinOps, gouvernance, roadmap
-├── lab/             # exemples locaux, on-prem, AWS, Azure
-├── platform/        # base, shared services, business workloads, overlays
-├── infra/           # terraform, ansible, scripts
-├── gitops/          # argocd, helm, kustomize
-├── cicd/            # jenkins, github actions, quality gates
-├── finops/          # modèles, rapports, tableaux de bord
-├── risks/           # RAID, dette, hypothèses, points ouverts
-└── evidence/        # preuves d'exécution et revues
-```
+## 8. Ordre de lecture recommandé
 
-## 6. Référentiel de lecture recommandé
+Si tu reviens sur le dépôt après une interruption, lis dans cet ordre :
 
-L'ordre recommandé n'est pas aléatoire. Il permet de comprendre avant d'agir.
-
-### Étape 1 — Vision et cadre
-1. `docs/vision/Mayabank-Vision.md`
-2. `docs/vision/Business-Capabilities.md`
-3. `docs/vision/Architecture-Principles.md`
-
-### Étape 2 — Architecture de haut niveau
-4. `docs/hld/HLD-MayaBank.md`
-5. `docs/hld/HLD-Platform.md`
+1. `README.md`
+2. `docs/vision/Mayabank-Vision.md`
+3. `docs/hld/HLD-MayaBank.md`
+4. `docs/hld/HLD-Platform.md`
+5. `docs/hld/HLD-Data-AI-Platform.md`
 6. `docs/hld/HLD-Security.md`
-7. `docs/hld/HLD-Data-Stateful.md`
-8. `docs/hld/HLD-Integration-Eventing.md`
-9. `docs/hld/HLD-FinOps.md`
+7. `docs/hld/HLD-FinOps.md`
+8. `docs/lld/LLD-global.md`
+9. `docs/lld/onprem.md`, `docs/lld/aws.md`, `docs/lld/azure.md`
+10. `docs/roadmap/Product-Roadmap.md`
+11. `docs/roadmap/Sprint-Plan.md`
+12. les ADR de cadrage
 
-### Étape 3 — Architecture détaillée
-10. `docs/lld/LLD-global.md`
-11. `docs/lld/onprem.md`
-12. `docs/lld/aws.md`
-13. `docs/lld/azure.md`
+---
 
-Puis :
-- `docs/lld/platform/*`
-- `docs/lld/workloads/*`
+## 9. Ordre de construction recommandé
 
-### Étape 4 — Décisions structurantes
-14. `docs/adr/*`
+L’ordre de construction officiel du dépôt est le suivant :
 
-### Étape 5 — Exploitation et sécurité
-15. `docs/runbooks/*`
-16. `docs/security/*`
+1. README / vision / HLD principal
+2. LLD global + providers
+3. shared-services
+4. workloads métier
+5. data & stateful
+6. data/IA platform
+7. sécurité / IAM / OIDC / secrets
+8. GitOps / CI/CD / quality gates
+9. FinOps avancé
+10. gouvernance / design authority
+11. lab semi-exécutable / evidence
 
-### Étape 6 — Coût, capacité, gouvernance
-17. `docs/finops/*`
-18. `docs/governance/*`
-19. `docs/roadmap/*`
+---
 
-## 7. Méthode de construction incrémentale
-
-Le dépôt est pensé pour être construit **par sprints**.
-
-### Sprint 0 — cadrage
-- vision
-- README
-- HLD principal
-- ADR de fondation
-- roadmap
-
-### Sprint 1 — plateforme
-- HLD plateforme
-- LLD global
-- LLD on-prem / AWS / Azure
-- topologie, réseau, exposition, stockage
-
-### Sprint 2 — shared services
-- Keycloak
-- Kong
-- Kafka
-- observability baseline
-- secrets baseline
-
-### Sprint 3 — business workloads
-- ODM
-- Pega
-- portails
-- batch
-
-### Sprint 4 — data & stateful
-- PostgreSQL
-- MongoDB
-- backup / restore
-- storage patterns
-
-### Sprint 5 — sécurité & IAM
-- threat model
-- IAM / OIDC / SSO
-- policy as code
-- compliance baseline
-
-### Sprint 6 — GitOps / CI/CD
-- Argo CD
-- Helm / Kustomize
-- Jenkins
-- quality gates
-
-### Sprint 7 — FinOps avancé
-- tagging
-- budgets
-- showback / chargeback
-- KPIs
-- rightsizing
-
-### Sprint 8 — gouvernance
-- architecture review checklist
-- quality gates HLD/LLD
-- risk register
-- design authority pack
-
-### Sprint 9 — lab semi-exécutable
-- kind / notes OKD
-- namespaces / quotas / policies
-- scripts de bootstrap et validation
-- preuves minimales
-
-## 8. Roadmap V1 → V4
+## 10. Roadmap de maturité
 
 ### V1 — socle crédible
-- structure complète du dépôt
-- README complet
-- vision
-- HLD principal
-- LLD global + providers
-- premières ADR
-- premiers runbooks
-- socle FinOps
-- placeholders propres pour la suite
+- dépôt structuré
+- vision et HLD
+- LLD global et providers
+- premiers workloads
+- FinOps et gouvernance fondatrice
+- Data/IA cadrée architecturalement
 
 ### V2 — industrialisation initiale
-- ansible
-- CI/CD basique
-- Prometheus / Grafana
-- policies initiales
-- runbooks consolidés
-- budgets par environnement
+- observabilité baseline
+- ansible / pipelines documentés
+- runbooks enrichis
+- quotas / network policies / sécurité de base
+- premiers patterns data pipelines et ML serving
 
 ### V3 — plateforme avancée
 - GitOps
-- patterns CSI / stateful renforcés
-- HA control plane
-- backup / restore et DR
-- showback / chargeback améliorés
+- stateful renforcé
+- DR / backup
+- showback / chargeback outillés
+- vector database patterns et cost controls Data/IA
 
-### V4 — posture enterprise-ready
+### V4 — enterprise-ready
 - hardening
-- compliance baseline
-- IAM/OIDC mature
+- conformité
+- IAM mature
 - audit logging
-- design authority pack finalisé
-- matrice d'écart OKD vers OpenShift enterprise
+- mapping complet OKD → OpenShift enterprise
+- gouvernance d’architecture consolidée
 
-## 9. FinOps avancé — lecture rapide
+---
 
-Le dépôt intègre un angle **FinOps avancé** :
+## 11. Ce que le dépôt doit prouver à la fin
 
-- centres de coûts par domaine ;
-- budgets par environnement ;
-- coûts par produit ;
-- coûts par namespace ;
-- unit economics ;
-- showback / chargeback ;
-- coût de l'observabilité ;
-- coût des workloads stateful vs stateless ;
-- relation entre criticité, résilience et coût.
+À la fin, MayaBank doit démontrer que son auteur sait :
+- structurer une plateforme cible cohérente ;
+- relier architecture, exploitation et coût ;
+- raisonner stateful / stateless / data / IA ;
+- intégrer IAM/SSO, observability, API management, eventing ;
+- documenter des décisions d’architecture ;
+- comparer on-prem, AWS et Azure sans perdre le modèle commun ;
+- traduire une base open source vers une cible OpenShift enterprise.
 
-Références de lecture :
-- `docs/finops/FinOps-Framework.md`
-- `docs/finops/Tagging-Strategy.md`
+---
+
+## 12. Mode de travail strictement interactif
+
+Le dépôt est conçu pour être construit **sprint par sprint**.
+
+Chaque sprint doit produire :
+- un objectif ;
+- un périmètre ;
+- des livrables visibles ;
+- une charge estimative ;
+- des critères de validation ;
+- une dette restante.
+
+Aucune étape ne doit mélanger :
+- ce qui est **documenté** ;
+- ce qui est **semi-exécutable** ;
+- ce qui est **cible future**.
+
+---
+
+## 13. Où regarder si le chantier s’arrête
+
+Si le projet s’interrompt, la reprise doit repartir de :
+- `README.md`
+- `docs/roadmap/Sprint-Plan.md`
+- `docs/roadmap/Product-Roadmap.md`
+- `docs/governance/Decision-Log.md`
+- `risks/Open-Issues.md`
+- `risks/Technical-Debt.md`
+
+Ces documents doivent toujours être tenus à jour en priorité.
+
+---
+
+## 14. Références internes les plus importantes
+
+- `docs/hld/HLD-MayaBank.md`
+- `docs/hld/HLD-Platform.md`
+- `docs/hld/HLD-Data-AI-Platform.md`
+- `docs/hld/HLD-Security.md`
+- `docs/hld/HLD-FinOps.md`
+- `docs/lld/LLD-global.md`
+- `docs/adr/ADR-0011-okd-to-openshift-enterprise-mapping.md`
 - `docs/finops/Capacity-and-Cost-Model.md`
-- `docs/finops/Showback-Chargeback.md`
-- `docs/finops/Unit-Economics.md`
-- `docs/finops/Environment-Budgets.md`
-
-## 10. Comment reprendre le dépôt si le chantier s'arrête
-
-Ce README est volontairement **complet** pour que le travail puisse reprendre plus tard sans perte de contexte.
-
-### 10.1 Vérifier l'état du dépôt
-- lire `README.md`
-- lire `docs/roadmap/Sprint-Plan.md`
-- lire `risks/Open-Issues.md`
-- lire `risks/Technical-Debt.md`
-- lire `docs/governance/Decision-Log.md`
-
-### 10.2 Reprendre au bon niveau
-- si la vision n'est plus claire : repartir de `docs/vision/`
-- si la cible technique n'est plus claire : repartir de `docs/hld/`
-- si la structure des workloads n'est plus claire : repartir de `docs/lld/`
-- si la décision d'architecture est floue : repartir de `docs/adr/`
-- si le coût et la capacité dérivent : repartir de `docs/finops/`
-
-### 10.3 Règle de poursuite
-Toujours poursuivre selon ce triptyque :
-
-1. **documenté**
-2. **semi-exécutable**
-3. **cible future**
-
-Ne jamais présenter comme déjà implémenté ce qui n'est qu'une cible future.
-
-## 11. Règles d'écriture du dépôt
-
-- documentation en **français**
-- noms techniques, composants et objets en **anglais**
-- un fichier = un objectif lisible
-- chaque document doit préciser :
-  - son objectif ;
-  - son périmètre ;
-  - ce qui est **actuel** ;
-  - ce qui est **cible** ;
-  - les hypothèses ;
-  - les limites ;
-  - les prochaines étapes
-
-## 12. Règles de gouvernance du dépôt
-
-- toute décision structurante passe par un **ADR**
-- toute évolution de cible impactant la plateforme doit mettre à jour le **HLD**
-- tout nouveau détail d'implémentation doit être porté dans un **LLD**
-- toute dette connue doit être visible dans `risks/Technical-Debt.md`
-- tout arbitrage non tranché doit apparaître dans `risks/Open-Issues.md`
-
-## 13. Démarrage recommandé du chantier
-
-Si tu veux reprendre la construction dans l'ordre, suis exactement ce plan :
-
-1. compléter ou challenger `docs/vision/Mayabank-Vision.md`
-2. valider `docs/hld/HLD-MayaBank.md`
-3. détailler `docs/hld/HLD-Platform.md`
-4. verrouiller `docs/lld/LLD-global.md`
-5. détailler `docs/lld/onprem.md`, `docs/lld/aws.md`, `docs/lld/azure.md`
-6. traiter `docs/lld/workloads/keycloak.md`, `kong.md`, `kafka.md`
-7. traiter `odm-decisioning.md` et `pega-workflow.md`
-8. traiter `postgresql.md` et `mongodb.md`
-9. consolider `docs/security/*`
-10. consolider `docs/finops/*`
-11. compléter `docs/governance/*`
-12. seulement après : renforcer `lab/`, `infra/`, `gitops/` et `cicd/`
-
-## 14. Ce qu'il ne faut pas faire
-
-- ne pas construire trop tôt un faux niveau enterprise sans socle ;
-- ne pas détailler le multi-cloud avant d'avoir un modèle d'architecture commun ;
-- ne pas traiter les workloads stateful comme de simples déploiements stateless ;
-- ne pas séparer architecture et coût ;
-- ne pas documenter vaguement : chaque choix important doit être traçable.
-
-## 15. Statut actuel du dépôt
-
-**Statut : V1 fondatrice**
-
-Le dépôt contient :
-- une structure complète ;
-- les documents fondateurs principaux ;
-- des placeholders organisés pour la suite ;
-- une trajectoire claire pour continuer incrémentalement.
-
-La suite du chantier consiste à densifier chaque domaine sans casser la cohérence globale.
+- `docs/security/OIDC-SSO-Model.md`
+- `docs/roadmap/Sprint-Plan.md`

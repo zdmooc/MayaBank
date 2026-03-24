@@ -1,13 +1,22 @@
 # FinOps Roadmap
 
 ## V1
-Cadre, tags, budgets, premiers KPIs.
+- cadre FinOps de base
+- premiers domaines de coût
+- premiers KPI
+- intégration initiale du domaine Data/IA
 
 ## V2
-Showback consolidé, coût par workload.
+- showback enrichi
+- capacity review périodique
+- coûts observability mieux suivis
+- coûts pipelines et stockage Data/IA mieux isolés
 
 ## V3
-Chargeback avancé, rightsizing.
+- chargeback avancé
+- rightsizing renforcé
+- métriques spécifiques vector storage et serving
 
 ## V4
-Couplage complet architecture / exploitation / coût.
+- gouvernance FinOps mature
+- convergence avec une cible enterprise

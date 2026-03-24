@@ -1,14 +1,14 @@
-# HLD Integration & Eventing
+# HLD Integration and Eventing
 
 ## Objectif
-Décrire les échanges inter-applicatifs et le backbone événementiel.
+Décrire les échanges, l’exposition API et le backbone événementiel de MayaBank.
 
 ## Composants
 - Kong API Gateway
-- Kafka
-- business APIs
-- batch integration points
-- IAM-protected access
+- Kafka event backbone
+- APIs métier
+- batch interfaces
+- Data/IA ingestion and enrichment flows
 
-## Statut
-V1 fondatrice.
+## Point Data/IA
+Le domaine Data/IA dépend fortement de Kafka et des patterns d’ingestion. Les pipelines d’enrichissement et de restitution doivent être pensés comme des consommateurs et producteurs de services transverses.

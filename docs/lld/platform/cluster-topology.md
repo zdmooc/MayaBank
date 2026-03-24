@@ -1,16 +1,11 @@
-# LLD Platform - Cluster Topology
+# Cluster Topology
 
-## Objectif
-Détailler ce sous-domaine plateforme.
+## Domaines logiques
+- platform
+- shared-services
+- business
+- data-ai
+- governance / operations
 
-## Modèle de contenu attendu
-- périmètre
-- composants
-- flux
-- choix retenus
-- dettes V1
-- écarts provider
-- trajectoire V2/V3/V4
-
-## Statut
-Placeholder structuré V1.
+## Remarque
+Le domaine `data-ai` est traité comme une extension logique du dépôt, avec ses propres workloads mais sans casser les fondations communes.

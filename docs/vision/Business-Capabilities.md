@@ -1,38 +1,14 @@
 # Business Capabilities
 
-## 1. Capacités métier simulées
-
+## Capacités métier MayaBank
 - client onboarding institutionnel
-- trade capture
-- pricing
-- workflow d'approbation
-- decisioning
+- consultation de portefeuille
+- pricing de produits dérivés
+- trade booking
+- workflow d’approbation
+- decisioning et risk scoring
 - reporting réglementaire
 - batch de fin de journée
-- audit & compliance
-
-## 2. Capacités techniques transverses
-
-- IAM / SSO
-- API Management
-- event streaming
-- persistance relationnelle
-- persistance documentaire
-- observabilité
-- gouvernance de plateforme
-- FinOps et capacité
-
-## 3. Mapping capacités → workloads
-
-| Capacité | Workload principal |
-|---|---|
-| Decisioning | IBM ODM |
-| Workflow | PegaSystems |
-| Event streaming | Kafka |
-| API exposure | Kong API Gateway |
-| Client access | client-portal-web / client-portal-session |
-| Transactional persistence | PostgreSQL |
-| Flexible reference data | MongoDB |
-| Authentication / federation | Keycloak |
-| Monitoring / logging | observability stack |
-| End-of-day processing | batch / CronJob |
+- audit et conformité
+- analytics et data enrichment
+- AI-assisted operations et knowledge retrieval

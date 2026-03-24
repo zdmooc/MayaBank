@@ -1,19 +1,17 @@
 # FinOps Framework
 
 ## Objectif
-Relier architecture, consommation, criticité, capacité et coût.
-
-## Principes
-- la plateforme n'est pas gratuite ;
-- les workloads stateful coûtent différemment des workloads stateless ;
-- l'observabilité a un coût propre ;
-- un coût sans contexte métier est peu utile ;
-- la résilience et la conformité doivent être visibles dans le raisonnement coût.
+Fournir un cadre de pilotage des coûts pour la plateforme MayaBank sur on-prem, AWS et Azure.
 
 ## Domaines de coût
 - platform-core
 - shared-services
-- trading-business
-- risk-compliance
+- business-workloads
 - data-services
-- operations-security
+- data-ai-services
+- security-operations
+
+## Règles
+- chaque domaine doit être rattaché à un centre de coût ;
+- le domaine Data/IA doit être identifiable séparément ;
+- les coûts observability et stockage ne doivent jamais être absorbés sans visibilité.
